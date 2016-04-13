@@ -21,10 +21,24 @@
 <PARAM NAME="Module" VALUE="Inbox"></OBJECT>
 
 <script src="https://raw.githubusercontent.com/akesterson/outlook-task-kanban/master/lib/jquery.min.js"></script>
-
+<script>
+  $(function() {
+    $( "#kanban_board" ).accordion();
+  });
+</script>
 </HEAD>
 <BODY>
 
+<div id="kanban_board">
+</div>
+	<script>
+	var board_div = document.getElementById("kanban_board");
+	var categories = ["Personal", "Management Duties", "Miscellanious"];
+	var arrayLength = categories.length;
+	for (var i = 0; i < arrayLength; i++) {
+	    board_div.innerHTML += `
+	    	<h3>${categories[$i]}</h3>
+	    	<div>
 		<table width=100%>
 			<tr>
 				<th>Backlog</th>
@@ -39,6 +53,7 @@
 							<param name="Namespace" value="MAPI">
 							<param name="Folder" value="Tasks\Backlog">
 		            				<param name="DeferUpdate" value="0">
+		            				<param name="Restriction" value=" [Categories] = '${categories[$i]}'">
 					</OBJECT>
 				</td>	
 				<td valign=top>
@@ -66,8 +81,10 @@
 					</OBJECT>
 				</td>	
 			</tr>
-		</table>	
-
+		</table>
+		</div>`;
+	}
+	</script>
 </body>
 
 </html>
